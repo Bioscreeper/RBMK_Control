@@ -29,19 +29,19 @@ local function Fatal_err(err)
 end
 local component = require("component")
 local e = require("event")
+local gpu = component.gpu
 ---Pushes an error to console with the text `err`
 ---@param err string
 ---@return nil
 local function Warn_err(err)
-	require("component").gpu.setForeground(0xFFFF00)
+	gpu.setForeground(0xFFFF00)
 	print("WARN: " .. err)
-	require("component").gpu.setForeground(0xFFFFFF)
+	gpu.setForeground(0xFFFFFF)
 	return nil
 end
 
 local funclib = require("funclib")
 local gpulib = require("gpulib")
-local gpucomp = component.gpu
 local invoke = component.invoke
 local rs -- Library initialization (until defined later)
 
@@ -494,33 +494,33 @@ end
 local function draw_basics()
 	gpulib.createBuffer(160, 50) -- ID should be 1.
 	gpulib.createBuffer(60, 60) -- ID should be 2.
-	gpucomp.setBackground(0x002400)
+	gpu.setBackground(0x002400)
 	gpulib.writeArea({1, 1, 160, 50, " "}, 1)
-	gpucomp.setForeground(0xffffff)
-	gpucomp.setBackground(0x969696)
-	gpucomp.fill(1, 1, 150, 3, " ")
-	gpucomp.set(2, 2, os.date())
-	gpucomp.setBackground(0x2D2D2D)
-	gpucomp.fill(19, 1, 29, 3, " ")
-	gpucomp.set(20, 2, "Overview")
-	gpucomp.setBackground(0x3C3C3C)
-	gpucomp.fill(30, 1, 41, 3, " ")
-	gpucomp.set(31, 2, "Fuel rods")
-	gpucomp.setBackground(0x4B4B4B)
-	gpucomp.fill(42, 1, 56, 3, " ")
-	gpucomp.set(43, 2, "Control rods")
-	gpucomp.setBackground(0x5A5A5A)
-	gpucomp.fill(57, 1, 66, 3, " ")
-	gpucomp.set(58, 2, "Boilers")
-	gpucomp.setBackground(0x696969)
-	gpucomp.fill(67, 1, 76, 3, " ")
-	gpucomp.set(68, 2, "Coolers")
-	gpucomp.setBackground(0x787878)
-	gpucomp.fill(77, 1, 91, 3, " ")
-	gpucomp.set(78, 2, "Irradiatiors")
-	gpucomp.setBackground(0x878787)
-	gpucomp.fill(92, 1, 107, 3, " ")
-	gpucomp.set(93, 2, "Fluid heaters")
+	gpu.setForeground(0xffffff)
+	gpu.setBackground(0x969696)
+	gpu.fill(1, 1, 150, 3, " ")
+	gpu.set(2, 2, os.date())
+	gpu.setBackground(0x2D2D2D)
+	gpu.fill(19, 1, 29, 3, " ")
+	gpu.set(20, 2, "Overview")
+	gpu.setBackground(0x3C3C3C)
+	gpu.fill(30, 1, 41, 3, " ")
+	gpu.set(31, 2, "Fuel rods")
+	gpu.setBackground(0x4B4B4B)
+	gpu.fill(42, 1, 56, 3, " ")
+	gpu.set(43, 2, "Control rods")
+	gpu.setBackground(0x5A5A5A)
+	gpu.fill(57, 1, 66, 3, " ")
+	gpu.set(58, 2, "Boilers")
+	gpu.setBackground(0x696969)
+	gpu.fill(67, 1, 76, 3, " ")
+	gpu.set(68, 2, "Coolers")
+	gpu.setBackground(0x787878)
+	gpu.fill(77, 1, 91, 3, " ")
+	gpu.set(78, 2, "Irradiatiors")
+	gpu.setBackground(0x878787)
+	gpu.fill(92, 1, 107, 3, " ")
+	gpu.set(93, 2, "Fluid heaters")
 end
 e.listen("touch", touch1)
 e.listen("interrupted", run)
@@ -556,14 +556,14 @@ while running do
 			local average_boiler_heat, average_boiler_steam, average_boiler_steam_capacity, average_boiler_water, average_boiler_water_capacity, boiler_type = getAverageRodData("fuel")
 		end
 		draw_basics()
-		gpucomp.setBackground(0x004900)
-		gpucomp.fill(7, 7, 146, 40, " ")
-		gpucomp.set(8, 8, "RBMK Overview")
-		gpucomp.set(9, 10, "Average Heat: " .. string.sub(tostring(average_heat), 1, 6) .. "°C" .. pad)
-		gpucomp.set(9, 12, "Slow Flux: " .. string.sub(tostring(average_slow_flux), 1, 6) .. "cm²/s" .. pad)
-		gpucomp.set(9, 13, "Fast Flux: " .. string.sub(tostring(average_fast_flux), 1, 6) .. "cm²/s" .. pad)
-		gpucomp.set(9, 15, "Enrichment: " .. string.sub(tostring(average_depletion), 1, 6) .. "%" .. pad)
-		gpucomp.set(9, 16, "Xenon Poisoning: " .. string.sub(tostring(average_xenon_poison), 1, 6) .. "%" .. pad)
+		gpu.setBackground(0x004900)
+		gpu.fill(7, 7, 146, 40, " ")
+		gpu.set(8, 8, "RBMK Overview")
+		gpu.set(9, 10, "Average Heat: " .. string.sub(tostring(average_heat), 1, 6) .. "°C" .. pad)
+		gpu.set(9, 12, "Slow Flux: " .. string.sub(tostring(average_slow_flux), 1, 6) .. "cm²/s" .. pad)
+		gpu.set(9, 13, "Fast Flux: " .. string.sub(tostring(average_fast_flux), 1, 6) .. "cm²/s" .. pad)
+		gpu.set(9, 15, "Enrichment: " .. string.sub(tostring(average_depletion), 1, 6) .. "%" .. pad)
+		gpu.set(9, 16, "Xenon Poisoning: " .. string.sub(tostring(average_xenon_poison), 1, 6) .. "%" .. pad)
 	end
 	if fuel_page then
 		while #rbmkfuel_heat > 0 do
@@ -628,25 +628,25 @@ while running do
 
 		end
 		draw_basics()
-		gpucomp.setBackground(0x004900)
-		gpucomp.fill(7, 7, 146, 40, " ")
-		gpucomp.set(8, 8, "RBMK Fuel")
-		gpucomp.set(9, 10, "Fuel Rod Averages: ")
-		gpucomp.set(9, 12, "Average Heat: " .. string.sub(tostring(average_heat), 1, 6) .. "°C" .. pad)
-		gpucomp.set(9, 14, "Slow Flux: " .. string.sub(tostring(average_slow_flux), 1, 6) .. "cm²/s" .. pad)
-		gpucomp.set(9, 15, "Fast Flux: " .. string.sub(tostring(average_fast_flux), 1, 6) .. "cm²/s" .. pad)
-		gpucomp.set(9, 17, "Enrichment: ".. string.sub(tostring(average_depletion), 1, 6) .. "%" .. pad)
-		gpucomp.set(9, 18, "Xenon Poisoning: " .. string.sub(tostring(average_xenon_poison), 1, 6) .. "%" .. pad)
-		gpucomp.set(46, 8, "Fuel Rods:")
+		gpu.setBackground(0x004900)
+		gpu.fill(7, 7, 146, 40, " ")
+		gpu.set(8, 8, "RBMK Fuel")
+		gpu.set(9, 10, "Fuel Rod Averages: ")
+		gpu.set(9, 12, "Average Heat: " .. string.sub(tostring(average_heat), 1, 6) .. "°C" .. pad)
+		gpu.set(9, 14, "Slow Flux: " .. string.sub(tostring(average_slow_flux), 1, 6) .. "cm²/s" .. pad)
+		gpu.set(9, 15, "Fast Flux: " .. string.sub(tostring(average_fast_flux), 1, 6) .. "cm²/s" .. pad)
+		gpu.set(9, 17, "Enrichment: ".. string.sub(tostring(average_depletion), 1, 6) .. "%" .. pad)
+		gpu.set(9, 18, "Xenon Poisoning: " .. string.sub(tostring(average_xenon_poison), 1, 6) .. "%" .. pad)
+		gpu.set(46, 8, "Fuel Rods:")
 		for a, _ in pairs(rbmkfuel_table) do
 			local b = funclib.inverse_mod(a, 5)
-			gpucomp.fill((b*36) + 46, ((a-b*5)*7) + 8, 20, 7, " ")
-			gpucomp.set((b*36) + 46, ((a-b*5)*7)+9, "Fuel Rod #: " .. a)
-			gpucomp.set((b*36) + 46, ((a-b*5)*7)+10, "Heat: " .. string.sub(tostring(rbmkfuel_heat[a]), 1, 6) .. "°C" .. pad)
-			gpucomp.set((b*36) + 46, ((a-b*5)*7)+11, "Slow Flux: " .. string.sub(tostring(rbmkfuel_Sflux[a]), 1, 6) .. "cm²/s" .. pad)
-			gpucomp.set((b*36) + 46, ((a-b*5)*7)+12, "Fast Flux: " .. string.sub(tostring(rbmkfuel_Fflux[a]), 1, 6) .. "cm²/s" .. pad)
-			gpucomp.set((b*36) + 46, ((a-b*5)*7)+13, "Depletion: " .. string.sub(tostring(rbmkfuel_Depletion[a]), 1, 6) .. "%" .. pad)
-			gpucomp.set((b*36) + 46, ((a-b*5)*7)+14, "Xenon Level: " .. string.sub(tostring(rbmkfuel_Xenon[a]), 1, 6) .. "%" .. pad)
+			gpu.fill((b*36) + 46, ((a-b*5)*7) + 8, 20, 7, " ")
+			gpu.set((b*36) + 46, ((a-b*5)*7)+9, "Fuel Rod #: " .. a)
+			gpu.set((b*36) + 46, ((a-b*5)*7)+10, "Heat: " .. string.sub(tostring(rbmkfuel_heat[a]), 1, 6) .. "°C" .. pad)
+			gpu.set((b*36) + 46, ((a-b*5)*7)+11, "Slow Flux: " .. string.sub(tostring(rbmkfuel_Sflux[a]), 1, 6) .. "cm²/s" .. pad)
+			gpu.set((b*36) + 46, ((a-b*5)*7)+12, "Fast Flux: " .. string.sub(tostring(rbmkfuel_Fflux[a]), 1, 6) .. "cm²/s" .. pad)
+			gpu.set((b*36) + 46, ((a-b*5)*7)+13, "Depletion: " .. string.sub(tostring(rbmkfuel_Depletion[a]), 1, 6) .. "%" .. pad)
+			gpu.set((b*36) + 46, ((a-b*5)*7)+14, "Xenon Level: " .. string.sub(tostring(rbmkfuel_Xenon[a]), 1, 6) .. "%" .. pad)
 		end
 	end
 	if boiler_page and Boilers then
@@ -669,24 +669,24 @@ while running do
 		--	local average_depletion
 		--	local average_xenon_poison
 		draw_basics()
-		gpucomp.setBackground(0x004900)
-		gpucomp.fill(7, 7, 146, 40, " ")
-		gpucomp.set(8, 8, "RBMK Boilers")
+		gpu.setBackground(0x004900)
+		gpu.fill(7, 7, 146, 40, " ")
+		gpu.set(8, 8, "RBMK Boilers")
 		--	for a, _ in pairs(rbmkfuel_table) do
 		--		local b = funclib.inverse_mod(a, 5)
-		--		gpucomp.fill((b*36) + 46, ((a-b*5)*7) + 8, 20, 7, " ")
-		--		gpucomp.set((b*36) + 46, ((a-b*5)*7)+9, "Fuel Rod #: " .. a)
-		--		gpucomp.set((b*36) + 46, ((a-b*5)*7)+10, "Heat: " .. string.sub(tostring(rbmkfuel_heat[a]), 1, 6) .. "°C" .. pad)
-		--		gpucomp.set((b*36) + 46, ((a-b*5)*7)+11, "Slow Flux: " .. string.sub(tostring(rbmkfuel_Sflux[a]), 1, 6) .. "cm²/s" .. pad)
-		--		gpucomp.set((b*36) + 46, ((a-b*5)*7)+12, "Fast Flux: " .. string.sub(tostring(rbmkfuel_Fflux[a]), 1, 6) .. "cm²/s" .. pad)
-		--		gpucomp.set((b*36) + 46, ((a-b*5)*7)+13, "Depletion: " .. string.sub(tostring(rbmkfuel_Depletion[a]), 1, 6) .. "%" .. pad)
-		--		gpucomp.set((b*36) + 46, ((a-b*5)*7)+14, "Xenon Level: " .. string.sub(tostring(rbmkfuel_Xenon[a]), 1, 6) .. "%" .. pad)
+		--		gpu.fill((b*36) + 46, ((a-b*5)*7) + 8, 20, 7, " ")
+		--		gpu.set((b*36) + 46, ((a-b*5)*7)+9, "Fuel Rod #: " .. a)
+		--		gpu.set((b*36) + 46, ((a-b*5)*7)+10, "Heat: " .. string.sub(tostring(rbmkfuel_heat[a]), 1, 6) .. "°C" .. pad)
+		--		gpu.set((b*36) + 46, ((a-b*5)*7)+11, "Slow Flux: " .. string.sub(tostring(rbmkfuel_Sflux[a]), 1, 6) .. "cm²/s" .. pad)
+		--		gpu.set((b*36) + 46, ((a-b*5)*7)+12, "Fast Flux: " .. string.sub(tostring(rbmkfuel_Fflux[a]), 1, 6) .. "cm²/s" .. pad)
+		--		gpu.set((b*36) + 46, ((a-b*5)*7)+13, "Depletion: " .. string.sub(tostring(rbmkfuel_Depletion[a]), 1, 6) .. "%" .. pad)
+		--		gpu.set((b*36) + 46, ((a-b*5)*7)+14, "Xenon Level: " .. string.sub(tostring(rbmkfuel_Xenon[a]), 1, 6) .. "%" .. pad)
 		--	end
 	elseif boiler_page and not Boilers then
 		draw_basics()
-		gpucomp.setBackground(0x004900)
-		gpucomp.fill(7, 7, 146, 40, " ")
-		gpucomp.set(56, 30, "Boilers Disabled")
+		gpu.setBackground(0x004900)
+		gpu.fill(7, 7, 146, 40, " ")
+		gpu.set(56, 30, "Boilers Disabled")
 	end
 	if control_page then
 		while #ctrl_colors > 0 do
@@ -711,9 +711,9 @@ while running do
 			end
 		end
 		draw_basics()
-		gpucomp.setBackground(0x004900)
-		gpucomp.fill(7, 7, 146, 40, " ")
-		gpucomp.set(8, 8, "RBMK Control Rods")
+		gpu.setBackground(0x004900)
+		gpu.fill(7, 7, 146, 40, " ")
+		gpu.set(8, 8, "RBMK Control Rods")
 	end
 	if cooler_page then
 		for i, v in pairs(rbmkctrl_table) do
@@ -727,9 +727,9 @@ while running do
 			end
 		end
 		draw_basics()
-		gpucomp.setBackground(0x004900)
-		gpucomp.fill(7, 7, 146, 40, " ")
-		gpucomp.set(8, 8, "RBMK Coolers")
+		gpu.setBackground(0x004900)
+		gpu.fill(7, 7, 146, 40, " ")
+		gpu.set(8, 8, "RBMK Coolers")
 	end
 	if outgasser_page then
 		for i, v in pairs(rbmkctrl_table) do
@@ -743,9 +743,9 @@ while running do
 			end
 		end
 		draw_basics()
-		gpucomp.setBackground(0x004900)
-		gpucomp.fill(7, 7, 146, 40, " ")
-		gpucomp.set(8, 8, "RBMK Outgassers")
+		gpu.setBackground(0x004900)
+		gpu.fill(7, 7, 146, 40, " ")
+		gpu.set(8, 8, "RBMK Outgassers")
 	end
 	if heater_page then
 		for i, v in pairs(rbmkctrl_table) do
@@ -759,9 +759,9 @@ while running do
 			end
 		end
 		draw_basics()
-		gpucomp.setBackground(0x004900)
-		gpucomp.fill(7, 7, 146, 40, " ")
-		gpucomp.set(8, 8, "RBMK Heaters")
+		gpu.setBackground(0x004900)
+		gpu.fill(7, 7, 146, 40, " ")
+		gpu.set(8, 8, "RBMK Heaters")
 	end
 	local average_heat = getAverageRodData("fuel")
 	if average_heat > CONFIG["maxheat"] and redstone_enabled then
@@ -794,8 +794,8 @@ while running do
 	end
 	os.sleep(0.05)
 end
-gpucomp.setForeground(0x662400)
-gpucomp.setBackground(0x000000)
+gpu.setForeground(0x662400)
+gpu.setBackground(0x000000)
 while #rbmkctrl_table > 1 do
 	table.remove(rbmkctrl_table)
 end
