@@ -50,14 +50,15 @@ function tank:fluid()
 	return self.amount
 end
 
-for x, y in component.list("ntm_") do
-	if not(y == "ntm_geiger") then
-		local object = component.proxy(x)
+for addr, type in component.list("ntm_") do
+	if (type ~= "ntm_geiger") then
+		local object = component.proxy(addr)
 		local a = tank:new(object, object.getFluidStored, object.getMaxStored, object.getFluidStored)
 		table.insert(tanks, a)
 	end
 end
 
+--Hardcoded values???
 local geiger = component.proxy("fe8e80dc-8c66-4f6b-a02e-48426e1c2b3a")
 local RAD_SEN_TURBINE= component.proxy("a59e72c9-cbfd-46c3-b244-202b4df7f454")
 local RAD_SEN_CONTROL= component.proxy("1a73157f-82b3-4a8e-8829-1af920b714a1")
